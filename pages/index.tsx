@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Image from "next/image";
+import Title from "../components/Title";
 
 const Home: React.FC = () => {
   return (
@@ -10,15 +10,15 @@ const Home: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1>Welcome to Next Shop!</h1>
+      <main className="p-4">
+        <Title>Next Shop</Title>
 
         <p>
           Get started by editing <code>pages/index.js</code>
         </p>
       </main>
 
-      <footer>
+      <footer className="p-2">
         <p>Next Shop</p>
       </footer>
     </div>
