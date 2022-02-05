@@ -1,7 +1,20 @@
 import Head from "next/head";
+import { ReactChildren } from "react";
 import Title from "../components/Title";
+import { getProducts, Product } from "../lib/products";
 
-const Home: React.FC = () => {
+export async function getStaticProps() {
+  console.log("[getStaticProps()]");
+  const products = await getProducts();
+  return { props: { products } };
+}
+
+interface Props {
+  children?: React.ReactNode;
+  products: Array<Product>;
+}
+
+const Home: React.FC = ({ products }: Props) => {
   return (
     <div>
       <Head>
@@ -12,10 +25,12 @@ const Home: React.FC = () => {
 
       <main className="p-4">
         <Title>Next Shop</Title>
-
-        <p>
-          Get started by editing <code>pages/index.js</code>
-        </p>
+        <h2 className="text-lg font-bold pb-2">Products</h2>
+        <ul>
+          {products.map(({ id, title }) => (
+            <li key={id}>{title}</li>
+          ))}
+        </ul>
       </main>
 
       <footer className="p-2">
