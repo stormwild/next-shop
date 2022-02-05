@@ -1,24 +1,25 @@
 import Head from "next/head";
+import Link from "next/link";
 import { ReactChildren, useEffect, useState } from "react";
 import Title from "../components/Title";
 import { getProducts, Product } from "../lib/products";
 
-// export async function getStaticProps() {
-//   console.log("[getStaticProps()]");
-//   const products = await getProducts();
-//   return {
-//     props: { products },
-//     revalidate: 30, // expiry in seconds
-//   };
-// }
-
-export async function getServerSideProps() {
-  console.log("[getServerSideProps()]");
+export async function getStaticProps() {
+  console.log("[getStaticProps()]");
   const products = await getProducts();
   return {
     props: { products },
+    revalidate: 30, // expiry in seconds
   };
 }
+
+// export async function getServerSideProps() {
+//   console.log("[getServerSideProps()]");
+//   const products = await getProducts();
+//   return {
+//     props: { products },
+//   };
+// }
 
 interface Props {
   children?: React.ReactNode;
@@ -42,7 +43,11 @@ const Home: React.FC = ({ products }: Props) => {
         <h2 className="text-lg font-bold pb-2">Products</h2>
         <ul>
           {products.map(({ id, title }) => (
-            <li key={id}>{title}</li>
+            <li key={id} className="mb-2">
+              <Link href={`/products/${id}`}>
+                <a>{title}</a>
+              </Link>
+            </li>
           ))}
         </ul>
       </main>
