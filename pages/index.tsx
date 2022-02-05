@@ -1,12 +1,23 @@
 import Head from "next/head";
-import { ReactChildren } from "react";
+import { ReactChildren, useEffect, useState } from "react";
 import Title from "../components/Title";
 import { getProducts, Product } from "../lib/products";
 
-export async function getStaticProps() {
-  console.log("[getStaticProps()]");
+// export async function getStaticProps() {
+//   console.log("[getStaticProps()]");
+//   const products = await getProducts();
+//   return {
+//     props: { products },
+//     revalidate: 30, // expiry in seconds
+//   };
+// }
+
+export async function getServerSideProps() {
+  console.log("[getServerSideProps()]");
   const products = await getProducts();
-  return { props: { products } };
+  return {
+    props: { products },
+  };
 }
 
 interface Props {
@@ -15,6 +26,9 @@ interface Props {
 }
 
 const Home: React.FC = ({ products }: Props) => {
+  //   console.log(products);
+  // const [products, setProducts] = useState(products);
+  // useEffect(() => getProducts().then(setProducts), []);
   return (
     <div>
       <Head>
